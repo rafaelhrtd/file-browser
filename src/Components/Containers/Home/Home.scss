@@ -1,0 +1,42 @@
+.Home {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50px 150px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    a {
+        height: auto;
+        color: #4C9BEE;
+        text-decoration: none;
+        &:hover, &:focus {
+            color: #2668AC;
+        }
+    }
+}
+
+
+.notFound {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;   
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-self: center;
+    padding: 15px;
+    h2 {
+        margin: 0;
+        padding: 5px 0;
+        flex-grow: 0;
+        width: auto;
+        padding: 15px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+    }
+}

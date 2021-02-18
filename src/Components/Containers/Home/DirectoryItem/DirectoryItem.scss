@@ -1,0 +1,44 @@
+.DirectoryItem {
+    display: flex;
+    width: 150px;
+    flex-grow: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    box-sizing: border-box;
+    padding: 15px;
+    align-items: center;
+    svg {
+        flex-basis: 100%;
+        font-size: 60px;
+    }
+    h2 {
+        margin: 0;
+        padding: 15px 0;
+    }
+}
+
+.File {
+    display: flex;
+    width: auto;
+    box-sizing: border-box;
+    width: 100%;
+    flex-grow: 0;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+    align-items: center;
+    svg {
+        flex-basis: 100%;
+        font-size: 60px;
+    }
+    h2 {
+        margin: 0;
+        padding: 5px 0;
+        width: auto;
+        padding: 15px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+    }
+}
