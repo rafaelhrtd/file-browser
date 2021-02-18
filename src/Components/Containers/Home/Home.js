@@ -48,6 +48,13 @@ class Home extends Component {
         // set to true to request data from server
         this.getDirectoryInformation(true);
     }
+     
+    // only update if new path is given or new directory information is received
+    shouldComponentUpdate = (nextProps, nextState) => {
+        return (JSON.stringify(this.state.currentDirectory) !== JSON.stringify(nextState.currentDirectory) ||
+        this.props.location.pathname !== nextProps.location.pathname)
+    }
+
     componentDidUpdate = (prevProps, prevState) => {
         if (JSON.stringify(this.state.currentDirectory) !== JSON.stringify(prevState.currentDirectory) ||
             this.props.location.pathname !== prevProps.location.pathname){
@@ -58,6 +65,9 @@ class Home extends Component {
 
     render (){
         let currentDirectory = this.state.currentDirectory;
+        // get current pathname from state, so that it changes
+        // at the same time that directory information is obtained
+        // and therefore does not cause issues with links
         let pathname = "/"
         for (let i = 0 ; i < this.state.currentAddress.length ; i++){
             pathname += this.state.currentAddress[i] + "/";
