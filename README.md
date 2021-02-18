@@ -11,3 +11,5 @@ React application to simulate file browsing.
 - Functional component *DirectoryItem.js* presents the items found within a directory, as well as file contents.
 - Functional component *Breadcrumbs.js* receives currentAddress in form of array and processes into clickable links.
 - The webpackDevServer takes get requests to the path "/path/", and responds with directory information (if the directory exists) or *null* if it does not. This information is saved in the state of *Home.js*.
+## Running Website
+[File browser](https://rafaelh-file-browser.herokuapp.com/)
