@@ -8,51 +8,37 @@ import Axios from 'axios';
 class Home extends Component {
     state = {
         currentAddress: [],
-        currentDirectory: null,
+        currentDirectory: "loading",
         errors: false
     }
 
-    // get current address and turn it into array for future use
-    getCurrentAddress = (justMounted = false) => {
-        const pathName = this.props.location.pathname.split("/");
-        let pathArray = [];
-        for (let i = 0 ; i < pathName.length ; i++){
-            if (pathName[i] !== ""){ pathArray = [...pathArray, pathName[i]]};
-        }
-        // used to trigger directory update after currentAddress is updated
-        // set as true during mounting
-        let shouldUpdateDirectory = justMounted;
-        this.setState(prevState => {
-            // check if current address has changed
-            shouldUpdateDirectory = justMounted || JSON.stringify(prevState.currentAddress) !== JSON.stringify(pathArray);
-            if (JSON.stringify(prevState.currentAddress) !== JSON.stringify(pathArray)){
-                return {
-                    currentAddress: pathArray
-                }
-            }
-        }, () => {
-            if (shouldUpdateDirectory){
-                this.getDirectoryInformation()
-            }
-        })
-    }
 
     errorHandler = () => {
         this.setState({errors: "true"});
     }
 
     // make Axios call to server
+    // change currentAddress simultaneously to avoid
+    // errors in the path used for the links
+
     getDirectoryInformation = () => {
         let url = window.location.origin + "/path/";
-        for (let i = 0 ; i < this.state.currentAddress.length ; i++){
-            url += this.state.currentAddress[i];
-            if (i < this.state.currentAddress.length - 1){
+        const pathName = this.props.location.pathname.split("/");
+        let pathArray = [];
+        for (let i = 0 ; i < pathName.length ; i++){
+            if (pathName[i] !== ""){ pathArray = [...pathArray, pathName[i]]};
+        }
+        for (let i = 0 ; i < pathArray.length ; i++){
+            url += pathArray[i];
+            if (i < pathArray.length - 1){
                 url += "/"
             }
         }
         Axios.get(url)
         .then(response => {
-            this.setState({currentDirectory: response.data})
+            this.setState(() => {
+                return {currentDirectory: response.data, currentAddress: pathArray};
+            })
         }, error => {
             this.errorHandler(error.response)
         })
@@ -60,15 +46,22 @@ class Home extends Component {
 
     componentDidMount = () => {
         // set to true to request data from server
-        this.getCurrentAddress(true);
+        this.getDirectoryInformation(true);
     }
     componentDidUpdate = (prevProps, prevState) => {
-        this.getCurrentAddress();
+        if (JSON.stringify(this.state.currentDirectory) !== JSON.stringify(prevState.currentDirectory) ||
+            this.props.location.pathname !== prevProps.location.pathname){
+            this.getDirectoryInformation();
+        }
     }
 
 
     render (){
         let currentDirectory = this.state.currentDirectory;
+        let pathname = "/"
+        for (let i = 0 ; i < this.state.currentAddress.length ; i++){
+            pathname += this.state.currentAddress[i] + "/";
+        }
 
         let content = "";
         // if the currentDirectory is null, provide an error message
@@ -76,6 +69,9 @@ class Home extends Component {
             content = <div className={classes.notFound}><h2>There has been an error communicating with the server.</h2></div>;            
         } else if (currentDirectory === null){
             content = <div className={classes.notFound}><h2>This directory does not exist.</h2></div>;            
+        } else if (currentDirectory === "loading"){
+            content = <div className={classes.notFound}><h2>Loading directory...</h2></div>;            
+
         }
 
         // show if currentDirectory is defined and the type is an acceptable type
@@ -87,8 +83,7 @@ class Home extends Component {
                     return(
                         <Link 
                             to={{
-                                pathname: this.props.location.pathname + key + "/",
-                                replace: true
+                                pathname: pathname + key + "/"
                             }}
                             key={key}>
                             <DirectoryItem
