@@ -18,7 +18,8 @@ const breadcrumbs = (props) => {
             <Link 
                 key={i}    
                 to={{
-                    pathname: path}}>
+                    pathname: path,
+                    replace: true}}>
                         {props.currentAddress[i]}{ i !== props.currentAddress.length - 1 ? <FontAwesomeIcon icon={faChevronRight} /> : null}
         </Link>
         )];

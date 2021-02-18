@@ -87,7 +87,8 @@ class Home extends Component {
                     return(
                         <Link 
                             to={{
-                                pathname: this.props.location.pathname + key + "/"
+                                pathname: this.props.location.pathname + key + "/",
+                                replace: true
                             }}
                             key={key}>
                             <DirectoryItem
