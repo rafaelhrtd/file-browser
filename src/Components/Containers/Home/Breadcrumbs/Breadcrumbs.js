@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder, faFile } from '@fortawesome/free-solid-svg-icons';
 import {withRouter, Link} from 'react-router-dom';
 import classes from './Breadcrumbs.scss';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';

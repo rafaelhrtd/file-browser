@@ -69,7 +69,6 @@ class Home extends Component {
 
     render (){
         let currentDirectory = this.state.currentDirectory;
-        let currentAddress = this.state.currentAddress;
 
         let content = "";
         // if the currentDirectory is null, provide an error message
