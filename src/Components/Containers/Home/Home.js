@@ -68,20 +68,18 @@ class Home extends Component {
 
 
     render (){
-        // Use the array stored in the state to navigate to the correct 
-        // item in the 'root' object
         let currentDirectory = this.state.currentDirectory;
         let currentAddress = this.state.currentAddress;
 
-        // if the content is undefined, provide an error message
         let content = "";
+        // if the currentDirectory is null, provide an error message
         if (this.state.errors){
             content = <div className={classes.notFound}><h2>There has been an error communicating with the server.</h2></div>;            
         } else if (currentDirectory === null){
             content = <div className={classes.notFound}><h2>This directory does not exist.</h2></div>;            
         }
 
-        // show if currentAddress is defined and the type is an acceptable type
+        // show if currentDirectory is defined and the type is an acceptable type
         if (currentDirectory !== null && (currentDirectory["type"] === "file" || currentDirectory["type"] === "dir")){
             // show the icons for the directory children
             if (currentDirectory["children"]){

@@ -12,12 +12,14 @@ const directoryItem = (props) => {
     } else {
         return null;
     }
+    // show file name for files
     if (props.type === "file" && props.endFile){
         return (
             <div className={classes.File}>
                 <h2>THIS IS FILE: {props.name}</h2>
             </div>
         )
+    // show contents for directory
     } else {
         return (
             <div className={classes.DirectoryItem}>
