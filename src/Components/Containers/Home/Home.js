@@ -44,7 +44,6 @@ class Home extends Component {
     // make Axios call to server
     getDirectoryInformation = () => {
         let url = window.location.origin + "/path/";
-        console.log(url);
         for (let i = 0 ; i < this.state.currentAddress.length ; i++){
             url += this.state.currentAddress[i];
             if (i < this.state.currentAddress.length - 1){
@@ -53,7 +52,6 @@ class Home extends Component {
         }
         Axios.get(url)
         .then(response => {
-            console.log(response)
             this.setState({currentDirectory: response.data})
         }, error => {
             this.errorHandler(error.response)
